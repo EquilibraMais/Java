@@ -7,15 +7,17 @@ public class UsuarioDto {
 	private Long id;
 	private String nome;
 	private String cargo;
+	private String senha;
 	private Setor setor;
 	
 	public UsuarioDto() {}
 
-	public UsuarioDto(Long id, String nome, String cargo, Setor setor) {
+	public UsuarioDto(Long id, String nome, String cargo, String senha, Setor setor) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cargo = cargo;
+		this.senha = senha;
 		this.setor = setor;
 	}
 
@@ -41,6 +43,14 @@ public class UsuarioDto {
 
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public Setor getSetor() {

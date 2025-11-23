@@ -23,4 +23,37 @@ public class Setor {
 	@ManyToOne
 	@JoinColumn(name= "EMPRESA_ID")
 	private Empresa empresa;
+	
+public Setor() {}
+	
+	public Setor(Long id, String descricao, Empresa empresa) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.empresa = empresa;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 }
