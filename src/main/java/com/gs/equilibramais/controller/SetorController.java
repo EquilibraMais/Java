@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gs.equilibramais.model.Empresa;
 import com.gs.equilibramais.model.Setor;
 import com.gs.equilibramais.model.Usuario;
 import com.gs.equilibramais.repository.EmpresaRepository;
@@ -29,7 +30,7 @@ public class SetorController {
 
 	@Autowired
 	private SetorRepository repS;
-	
+
 	@Autowired
 	private SetorCachingService cacheS;
 	
@@ -58,7 +59,7 @@ public class SetorController {
 		}
 
 		mv.addObject("setores", setores);
-		mv.addObject("lista_setores", cacheS.findAll());
+		mv.addObject("lista_empresas", cacheE.findAll());
 
 		return mv;
 	}
@@ -67,9 +68,9 @@ public class SetorController {
 	public ModelAndView retornarCadSetor() {
 
 		ModelAndView mv = new ModelAndView("/setor/novo");
-
+		
 		mv.addObject("setor", new Setor());
-		mv.addObject("lista_setores", cacheS.findAll());
+		mv.addObject("lista_empresas", cacheE.findAll());
 
 		return mv;
 	}
@@ -81,7 +82,7 @@ public class SetorController {
 			
 			ModelAndView mv = new ModelAndView("/setor/novo");
 			mv.addObject("setor", setor);
-			mv.addObject("lista_setores", cacheS.findAll());
+			mv.addObject("lista_empresas", cacheE.findAll());
 			return mv;
 						
 		} else {
@@ -107,6 +108,7 @@ public class SetorController {
 			ModelAndView mv = new ModelAndView("/setor/detalhes");
 			mv.addObject("setor", op.get());
 			mv.addObject("uri", request.getRequestURI());
+			
 			return mv;
 			  
 		} else {
@@ -123,7 +125,8 @@ public class SetorController {
 			
 			ModelAndView mv = new ModelAndView("/setor/edicao");
 			mv.addObject("setor", op.get());
-			mv.addObject("lista_setores", repS.findAll());
+			mv.addObject("lista_empresas", cacheE.findAll());
+			
 			cacheS.limparCache();
 			return mv;
 			
@@ -139,7 +142,8 @@ public class SetorController {
 			
 			ModelAndView mv = new ModelAndView("/setor/edicao");
 			mv.addObject("setor", setor);
-			mv.addObject("lista_setores", cacheS.findAll());
+			mv.addObject("lista_empresas", cacheE.findAll());
+			
 			return mv;
 			
 		} else {
@@ -152,9 +156,11 @@ public class SetorController {
 				setor_antigo.setEmpresa(setor.getEmpresa());
 				repS.save(setor_antigo);
 				cacheS.limparCache();
+				
 				return new ModelAndView("redirect:/index");
 				
 			} else {
+				
 				return new ModelAndView("redirect:/index");
 			}
 		}

@@ -1,0 +1,81 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecalho('Menu do Sistema')}" />
+
+<body>
+	
+	<style>
+		.custom-btn{
+			background-color: #BAC9B2 !important;
+			color: black !important;
+		}
+		.custom-card{
+			padding: 16px !important; 
+			min-width: 220px !important; 
+			background-color: #E3E3E3 !important;
+			border-color: #6B8E65 !important;
+		}
+		h3{
+			color: black !important;
+		}
+		p{
+			color: black !important;
+		}
+		h1{
+			color: black !important;
+		}
+		h2{
+			color: black !important;
+		}
+	</style>
+
+  <div th:replace="~{fragmentos :: form-logout}" />
+  
+  <div th:replace="~{fragmentos :: idioma('index')}" />
+
+  <div class="container">
+
+    <div style="display: flex; align-items: center; color: #006400">
+	<img src="/img/logo.png" alt="Logo" style="height: 80px; margin-right: 16px; margin-top: 5px">
+      <b><h1>
+        <span th:text="#{saudacao}">Olá,</span>
+        <span th:text="${usuario.nome}">X</span>!
+      </h1></b>
+    </div>
+
+    <div class="row">
+      <h2>Menu do Sistema</h2>
+    </div>
+
+    <!-- Grade de opções -->
+    <div class="row" style="gap: 16px; margin-top: 12px;">
+
+      <div class="col-3 card custom-card">
+        <h3 th:text="#{empresa}">Empresa</h3>
+        <p th:text="#{gerenciar_empresa}">Gerenciar empresas.</p>
+        <a class="btn custom-btn" th:href="@{/empresa/index}"><span th:text="#{abrir}">Abrir</span></a>
+      </div>
+
+      <div class="col-3 card custom-card">
+        <h3 th:text="#{setor}">Setor</h3>
+        <p th:text="#{gerenciar_setores}">Gerenciar setores.</p>
+        <a class="btn custom-btn" th:href="@{/setor/index}"><span th:text="#{abrir}">Abrir</span></a>
+      </div>
+
+      <div class="col-3 card custom-card">
+        <h3 th:text="#{usuario}">Usuario</h3>
+        <p th:text="#{gerenciar_usuario}">Gerenciar usuários.</p>
+        <a class="btn custom-btn" th:href="@{/usuario/index}"><span th:text="#{abrir}">Abrir</span></a>
+      </div>
+
+      <div class="col-3 card custom-card">
+        <h3 th:text="#{funcionario_info}">Informações de Funcionários</h3>
+        <p th:text="#{gerenciar_funcionario_info}">Gerenciar informações de funcionários.</p>
+        <a class="btn custom-btn" th:href="@{/funcionario_info/index}"><span th:text="#{abrir}">Abrir</span></a>
+      </div>
+
+  </div>
+
+  <script th:replace="~{fragmentos :: script-js}"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: cabecalho('Informações de Funcionários')}" />
+
+<body>
+	
+	<div th:replace="~{fragmentos :: form-logout}" />
+	
+	<div th:replace="~{fragmentos :: idioma(${uri})}" />
+	
+	<div class="container">
+		
+		<img src="/img/logo.png" alt="Logo" style="height: 80px; margin-right: 16px; margin-top: 5px">
+		
+		<div class="row">
+			<h1 th:text="#{detalhes_funcionario_info}">Detalhes de funcionários</h1>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<table class="table table-hover">
+
+					<tr>
+						<td th:text="#{funcionario_info.humor}">Humor</td>
+						<td><span th:text="${funcionario_info.humor}"></span></td>
+					</tr>
+					<tr>
+						<td th:text="#{funcionario_info.energia}">Energia</td>
+						<td><span th:text="${funcionario_info.energia}"></span></td>
+					</tr>
+					<tr>
+						<td th:text="#{funcionario_info.carga}">Carga</td>
+						<td><span th:text="${funcionario_info.carga}"></span></td>
+					</tr>
+					<tr>
+						<td th:text="#{funcionario_info.sono}">Sono</td>
+						<td><span th:text="${funcionario_info.sono}"></span></td>
+					</tr>
+					<tr>
+						<td th:text="#{funcionario_info.observacao}">Observacao</td>
+						<td><span th:text="${funcionario_info.observacao}"></span></td>
+					<tr>
+					<tr>
+						<td th:text="#{funcionario_info.historico_medico}">Histórico médico</td>
+						<td><span th:text="${funcionario_info.historico_medico}"></span></td>
+					<tr>
+					<tr>
+						<td th:text="#{funcionario_info.data}">Data</td>
+						<td><span th:text="${funcionario_info.data}"></span></td>
+					<tr>							
+						<td th:text="#{funcionario_info.setor.descricao}">Setor</td>
+						<td><span th:text="${funcionario_info.usuario.setor.descricao}"></span></td>
+					</tr>
+
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<a href="/funcionario_info/index"><span th:text="#{lista_funcionarios_infos}"></span></a>
+		</div>
+	</div>
+
+	<!-- Option 1: Bootstrap Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

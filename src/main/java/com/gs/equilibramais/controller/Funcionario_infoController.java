@@ -43,6 +43,7 @@ public class Funcionario_infoController {
 		ModelAndView mv = new ModelAndView("/funcionario_info/index");
 
 		List<Funcionario_info> funcionarios_infos = cacheF.findAll();
+		List<Usuario> usuarios = cacheU.findAll();
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
@@ -53,9 +54,7 @@ public class Funcionario_infoController {
 		}
 
 		mv.addObject("funcionarios_info", funcionarios_infos);
-		mv.addObject("lista_usuarios", cacheU.findAll());
-
-		System.out.println(funcionarios_infos);
+		mv.addObject("lista_usuarios", usuarios);
 		
 		return mv;
 	}
@@ -66,7 +65,7 @@ public class Funcionario_infoController {
 		ModelAndView mv = new ModelAndView("/funcionario_info/novo");
 
 		mv.addObject("funcionario_info", new Funcionario_info());
-		mv.addObject("lista_funcionarios_infos", cacheF.findAll());
+		mv.addObject("lista_usuarios", cacheU.findAll());
 
 		return mv;
 	}
@@ -126,7 +125,7 @@ public class Funcionario_infoController {
 			
 			ModelAndView mv = new ModelAndView("/funcionario_info/edicao");
 			mv.addObject("funcionario_info", op.get());
-			mv.addObject("lista_usuarios", repU.findAll());
+			mv.addObject("lista_usuarios", cacheU.findAll());
 			cacheF.limparCache();
 			return mv;
 			

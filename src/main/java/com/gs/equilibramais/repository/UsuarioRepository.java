@@ -11,4 +11,5 @@ import com.gs.equilibramais.model.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	
 	Optional<Usuario> findByNome(String nome);
+
 }

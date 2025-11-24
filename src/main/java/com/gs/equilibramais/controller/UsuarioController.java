@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gs.equilibramais.model.Setor;
 import com.gs.equilibramais.model.Usuario;
+import com.gs.equilibramais.repository.SetorRepository;
 import com.gs.equilibramais.repository.UsuarioRepository;
+import com.gs.equilibramais.service.SetorCachingService;
+import com.gs.equilibramais.service.UsuarioCachingService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -30,6 +34,12 @@ public class UsuarioController {
 	private PasswordEncoder encoder;
 	@Autowired
 	private UsuarioRepository repU;
+	@Autowired
+	private UsuarioCachingService cacheU;
+	@Autowired
+	private SetorRepository repS;
+	@Autowired
+	private SetorCachingService cacheS;
 
 	@GetMapping("/login")
 	public ModelAndView logar() {
@@ -40,6 +50,8 @@ public class UsuarioController {
 	public ModelAndView popularIndexMenuPrincipal() {
 
 		ModelAndView mv = new ModelAndView("/home/index");
+		
+		List<Usuario> usuarios = cacheU.findAll();
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
@@ -70,6 +82,7 @@ public class UsuarioController {
 		
 		if(op.isPresent()) {
 			mv.addObject("usuario", op.get());
+			mv.addObject("lista_setores", cacheS.findAll());
 		}
 
 		mv.addObject("usuarios", usuarios);
@@ -81,6 +94,7 @@ public class UsuarioController {
 	public ModelAndView retornarCadUsuario() {
 
 		ModelAndView mv = new ModelAndView("/usuario/novo");
+		mv.addObject("lista_setores", cacheS.findAll());
 
 		mv.addObject("usuario", new Usuario());
 
@@ -88,13 +102,28 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/usuario/insere_usuario")
-	public ModelAndView inserirUsuario(Usuario usuario) {
+	public ModelAndView inserirUsuario(@Valid Usuario usuario,  BindingResult bd ) {
 
-		usuario.setSenha(encoder.encode(usuario.getSenha()));
-
-		repU.save(usuario);
-
-		return new ModelAndView("redirect:/index");
+if(bd.hasErrors()) {
+			
+			ModelAndView mv = new ModelAndView("/usuario/novo");
+			mv.addObject("usuario", usuario);
+			mv.addObject("lista_setores", cacheS.findAll());
+			return mv;
+						
+		} else {
+		
+			Usuario usuario_novo = new Usuario();
+			usuario_novo.setCargo(usuario.getCargo());
+			usuario_novo.setNome(usuario.getNome());
+			usuario_novo.setSenha(encoder.encode(usuario.getSenha()));
+			usuario_novo.setSetor(usuario.getSetor());
+			
+			repU.save(usuario_novo);
+			cacheU.limparCache();
+			
+			return new ModelAndView("redirect:/index");
+		}
 	}
 	
 	@GetMapping("/usuario/detalhes/{id}")
@@ -123,6 +152,9 @@ public class UsuarioController {
 			
 			ModelAndView mv = new ModelAndView("/usuario/edicao");
 			mv.addObject("usuario", op.get());
+			mv.addObject("lista_setores", cacheS.findAll());
+			
+			cacheU.limparCache();
 			return mv;
 			
 		} else {
@@ -137,6 +169,7 @@ public class UsuarioController {
 			
 			ModelAndView mv = new ModelAndView("/usuario/edicao");
 			mv.addObject("usuario", usuario);
+			mv.addObject("lista_setores", cacheS.findAll());
 			return mv;
 			
 		} else {
@@ -153,6 +186,8 @@ public class UsuarioController {
 					usuario_antigo.setSenha(encoder.encode(usuario.getSenha()));
 					}
 				repU.save(usuario_antigo);
+				cacheS.limparCache();
+				
 				return new ModelAndView("redirect:/index");
 				
 			} else {
@@ -169,6 +204,7 @@ public class UsuarioController {
 		if(op.isPresent()) {
 			
 			repU.deleteById(id);
+			cacheS.limparCache();
 			
 			return new ModelAndView("redirect:/index");
 			

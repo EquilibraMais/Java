@@ -1,0 +1,61 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecalho('Lista de Setores')}" />
+
+  <body>
+	  
+	<div th:replace="~{fragmentos :: form-logout}" />
+	
+	<div th:replace="~{fragmentos :: idioma(${uri})}" />
+	
+    <div class="container">
+		
+		<div style="display: flex; align-items: center;">
+			<img src="/img/logo.png" alt="Logo" style="height: 80px; margin-right: 16px; margin-top: 5px">
+			<b><h1> 
+				<span th:text="#{saudacao}">Olá,</span> 
+				<span th:text="${usuario.nome}">X</span>!
+			</h1></b>
+		</div>
+		
+        <div class="row">
+            <h2 th:text="#{lista_setores}">Lista de Setores</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+							<th scope="col">ID</th>
+                            <th scope="col" th:text="#{setor.empresa.nome_empresa}">Empresa</th>
+                            <th scope="col" th:text="#{setor.descricao}">Descrição</th>
+							<th scope="col">#</th>
+							<th scope="col">#</th>
+							<th scope="col">#</th>
+							<th scope="col">#</th>
+                        </tr>
+                      </thead>
+                    <tbody>
+                        <tr th:each="setor : ${setores}">
+							  <th class="col-2" scope="row" th:text="${setor.id}">A</th>
+				              <th class="col-2" th:text="${setor.empresa.nome_empresa}">B</th>
+				              <td class="col-2" th:text="${setor.descricao}">C</td>
+				              
+				              <td class="col-2"><a th:href="@{/setor/detalhes/{idsetor}(idsetor = ${setor.id})}" th:text="#{detalhes}">Detalhes</a></td>
+				              <td class="col-2"><a th:href="@{/setor/editar/{idsetor}(idsetor = ${setor.id})}" th:text="#{editar}">Editar</a></td>
+				              <td class="col-2"><a th:href="@{/setor/remover/{idsetor}(idsetor = ${setor.id})}" th:text="#{remover}">Remover</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <a href="/setor/novo" th:text="#{cadastrar_setor}">Cadastrar Setor</a>
+			<a href="/index" th:text="#{voltar_index}">Voltar a tela inicial</a>
+        </div>
+    </div>
+    
+    <script th:replace="~{fragmentos :: script-js}" />
+
+    </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecalho('Lista de Informações de Funcionários')}" />
+
+  <body>
+	  
+	<div th:replace="~{fragmentos :: form-logout}" />
+	
+	<div th:replace="~{fragmentos :: idioma(${uri})}" />
+	
+    <div class="container">
+		
+		<div style="display: flex; align-items: center;">
+			<img src="/img/logo.png" alt="Logo" style="height: 80px; margin-right: 16px; margin-top: 5px">
+			<b><h1> 
+				<span th:text="#{saudacao}">Olá,</span> 
+				<span th:text="${usuario.nome}">X</span>!
+			</h1></b>
+		</div>
+		
+        <div class="row">
+            <h2 th:text="#{lista_funcionarios_infos}">Lista de Informações de Funcionários</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+							<th scope="col">ID</th>
+                            <th scope="col" th:text="#{funcionario_info.humor}">Humor</th>
+                            <th scope="col" th:text="#{funcionario_info.energia}">Energia</th>
+							<th scope="col" th:text="#{funcionario_info.carga}">Carga</th>
+							<th scope="col" th:text="#{funcionario_info.sono}">Sono</th>
+							<th scope="col" th:text="#{funcionario_info.observacao}">Observação</th>
+							<th scope="col" th:text="#{funcionario_info.historico_medico}">Histórico Médico</th>
+							<th scope="col" th:text="#{funcionario_info.data}">Data</th>
+							<th scope="col" th:text="#{funcionario_info.usuario.setor.descricao}">Setor</th>						
+                        </tr>
+                      </thead>
+                    <tbody>
+                        <tr th:each="funcionario_info : ${funcionarios_info}">
+							  <th class="col-2" scope="row" th:text="${funcionario_info.id}">A</th>
+							  <th class="col-2" scope="row" th:text="${funcionario_info.humor}">B</th>
+							  <th class="col-2" scope="row" th:text="${funcionario_info.energia}">C</th>
+							  <th class="col-2" scope="row" th:text="${funcionario_info.carga}">D</th>
+							  <th class="col-2" scope="row" th:text="${funcionario_info.sono}">E</th>
+							  <th class="col-2" scope="row" th:text="${funcionario_info.observacao}">F</th>
+							  <th class="col-2" scope="row" th:text="${funcionario_info.historico_medico}">G</th>
+							  <th class="col-2" scope="row" th:text="${funcionario_info.data}">H</th>
+							  <th class="col-2" scope="row" th:text="${funcionario_info.usuario.setor.descricao}">I</th>
+				              
+				              
+				              <td class="col-2"><a th:href="@{/funcionario_info/detalhes/{idfuncionario_info}(idfuncionario_info = ${funcionario_info.id})}" th:text="#{detalhes}">Detalhes</a></td>
+				              <td class="col-2"><a th:href="@{/funcionario_info/editar/{idfuncionario_info}(idfuncionario_info = ${funcionario_info.id})}" th:text="#{editar}">Editar</a></td>
+				              <td class="col-2"><a th:href="@{/funcionario_info/remover/{idfuncionario_info}(idfuncionario_info = ${funcionario_info.id})}" th:text="#{remover}">Remover</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <a href="/funcionario_info/novo" th:text="#{cadastrar_funcionario_info}">Cadastrar Informações de Funcionário</a>
+			<a href="/index" th:text="#{voltar_index}">Voltar a tela inicial</a>
+        </div>
+    </div>
+    
+    <script th:replace="~{fragmentos :: script-js}" />
+
+    </body>
+</html>
